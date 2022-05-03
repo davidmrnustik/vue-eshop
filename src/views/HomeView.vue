@@ -61,7 +61,8 @@ import CustomAlert from '@/components/CustomAlert'
 import ProductList from '@/components/ProductList'
 import RangeSelector from '@/components/RangeSelector'
 import { useProductStore } from '@/stores/ProductStore'
-import { mapActions, mapState } from 'pinia/dist/pinia'
+import { mapState, mapWritableState } from 'pinia'
+// import { mapActions, mapState } from 'pinia/dist/pinia'
 
 export default {
   name: 'HomeView',
@@ -97,6 +98,10 @@ export default {
     RangeSelector,
     CustomAlert
   },
+  // setup() {
+  //   const productStore = useProductStore()
+  //   return { productStore }
+  // },
   methods: {
     transitionColor(el) {
       this.btnColor = 'btn-warning'
@@ -112,7 +117,8 @@ export default {
       this.btnColor = 'btn-secondary'
     }
     // addItem(product) {
-    // this.$emit('addItem', product)
+    //   // this.$emit('addItem', product)
+    //   this.productStore.addItemToCart(product)
     // }
   },
   computed: {
@@ -131,7 +137,7 @@ export default {
       return this.products.filter(i => Number(i.price) < Number(this.max))
     },
     ...mapState(useProductStore, ['products']),
-    ...mapActions(useProductStore, ['addItemToCart'])
+    ...mapWritableState(useProductStore, ['addItemToCart'])
   },
   watch: {
     max(myValue) {
