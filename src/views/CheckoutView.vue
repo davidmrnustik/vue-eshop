@@ -21,13 +21,13 @@
           <td class="text-center">
             <div class="btn-group" role="group" aria-label="Basic example">
               <button
-                @click="$emit('addItem', item.product)"
+                @click="addItemToCart(item.product)"
                 class="btn btn-success"
               >
                 +
               </button>
               <button
-                @click="$emit('removeItem', index)"
+                @click="removeItem(index)"
                 class="btn btn-outline-success"
               >
                 -
@@ -53,13 +53,17 @@
 
 <script>
 import Currency from '@/components/Currency'
+import { mapState, mapWritableState } from 'pinia'
+import { useProductStore } from '@/stores/ProductStore'
 
 export default {
   name: 'Checkout',
-  props: ['cart', 'cartTotal'],
-  emits: ['addItem', 'removeItem'],
   components: {
     Currency
+  },
+  computed: {
+    ...mapState(useProductStore, ['cart', 'cartTotal']),
+    ...mapWritableState(useProductStore, ['addItemToCart', 'removeItem'])
   }
 }
 </script>

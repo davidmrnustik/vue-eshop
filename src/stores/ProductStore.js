@@ -13,8 +13,8 @@ export const useProductStore = defineStore('ProductStore', {
     },
     addItemToCart(item) {
       let whichProduct
-      let existingProduct = this.cart.filter((item, index) => {
-        if (Number(item.product.id) === Number(item.id)) {
+      let existingProduct = this.cart.filter((product, index) => {
+        if (Number(product.product.id) === Number(item.id)) {
           whichProduct = index
           return true
         } else {
@@ -25,6 +25,13 @@ export const useProductStore = defineStore('ProductStore', {
         this.cart[whichProduct].qty++
       } else {
         this.cart.push({ product: item, qty: 1 })
+      }
+    },
+    removeItem(id) {
+      if (this.cart[id].qty > 1) {
+        this.cart[id].qty--
+      } else {
+        this.cart.splice(id, 1)
       }
     }
   },
