@@ -24,19 +24,12 @@ export default {
       }
     })
       .then(res => (res.ok ? res.json() : new Error('Something went wrong.')))
-      .then(data => {
-        this.setProducts(data)
-        // this.products = this.productStore.products
-      })
+      .then(this.setProducts)
       .catch(error => {
         console.log(error)
         new Error('Something went wrong: ', error)
       })
   },
-  // setup() {
-  //   const productStore = useProductStore()
-  //   return { productStore }
-  // },
   computed: {
     ...mapState(useProductStore, ['products']),
     ...mapWritableState(useProductStore, ['removeItem', 'setProducts'])
